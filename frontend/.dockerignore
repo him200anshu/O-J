@@ -1,0 +1,3 @@
+# Ignore files and directories specific to frontend
+node_modules/
+build/
