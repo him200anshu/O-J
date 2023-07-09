@@ -5,6 +5,7 @@ import "./Home.css";
 
 function Home() {
   const [toggleState, setToggleState] = useState(1);
+  const [codeProblems, setCodeProblems] = useState([]);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -18,9 +19,22 @@ function Home() {
     navigate("/");
   };
 
-  const handleCodeClick = () => {
-    navigate("/Compiler");
+  const handleCodeClick = (problemId) => {
+    navigate("/Compiler", { state: { problemId } });
   };
+
+  useEffect(() => {
+    const fetchCodeProblems = async () => {
+      try {
+        const response = await axios.post("/getCodeProblems");
+        setCodeProblems(response.data.problems);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCodeProblems();
+  }, []);
 
   return (
     <div className="homepage">
@@ -65,29 +79,27 @@ function Home() {
               <h2>Two Sum</h2>
               <hr />
               <p>
-               Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
-
-               You may assume that each input would have exactly one solution, and you may not use the same element twice.
-
-               You can return the answer in any order.
+                Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+                You may assume that each input would have exactly one solution, and you may not use the same element twice.
+                You can return the answer in any order.
               </p>
               <hr />
               <h3> Example-1</h3>
               <hr />
               <p>
-              Input: nums = [2,7,11,15], target = 9
-              Output: [0,1]
-              Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+                Input: nums = [2,7,11,15], target = 9
+                Output: [0,1]
+                Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
               </p>
               <hr />
               <h3> Example-2 </h3>
               <hr />
               <p>
-              Input: nums = [3,2,4], target = 6
-              Output: [1,2]
+                Input: nums = [3,2,4], target = 6
+                Output: [1,2]
               </p>
               <hr />
-              <button className="code-button" onClick={handleCodeClick}>
+              <button className="code-button" onClick={() => handleCodeClick(1)}>
                 Code
               </button>
             </div>

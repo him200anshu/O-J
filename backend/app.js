@@ -1,8 +1,10 @@
 const express = require("express");
+const router = express.Router();
 const { userdata } = require("./mongo");
 const cors = require("cors");
 const { generateFile, createInput } = require("./generateFile");
 const { executeCpp } = require("./executeCpp");
+const { Ojproblem } = require("./mongo");
 
 const app = express();
 
@@ -75,6 +77,29 @@ app.post("/signup", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "fail" });
+  }
+});
+
+
+
+app.get('/api/ojproblem/:problemId', async (req, res) => {
+  const { problemId } = req.params;
+
+  console.log('Received problem ID:', problemId);
+
+  try {
+    const problem = await Ojproblem.findOne({ problemId: parseInt(problemId) });
+
+    console.log('Problem:', problem);
+
+    if (problem) {
+      res.json(problem);
+    } else {
+      res.status(404).json({ error: 'Problem not found' });
+    }
+  } catch (error) {
+    console.error('Error while fetching problem:', error.message);
+    res.status(500).json({ error: 'An error occurred while fetching the problem' });
   }
 });
 
