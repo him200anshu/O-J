@@ -61,7 +61,17 @@ function Login() {
       <p>OR</p>
       <br />
 
-      <Link to="/signup">Signup Page</Link>
+      <Link to="/signup">
+      <button style={{ backgroundColor: "green", color: "white" }}>
+        Signup
+        </button>
+        </Link>
+
+        <Link to="/forgotpassword">
+      <button style={{ backgroundColor: "green", color: "white" }}>
+        ForgotPassword!
+        </button>
+        </Link>
     </div>
   );
 }

@@ -3,6 +3,15 @@
   padding: 20px;
   background-color: #f7f7f7;
 }
+.banner {
+  background-color: rgb(110, 56, 56);
+  padding: 10px;
+}
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
 
 .user-box {
   display: flex;
@@ -78,4 +87,41 @@
 
 .active-content {
   display: block;
+}
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.code-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007f00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.code-button-big-green {
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #007f00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.code-button-big-green:hover {
+  background-color: #006400;
 }

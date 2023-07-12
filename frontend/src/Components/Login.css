@@ -26,6 +26,8 @@
     padding: 10px;
     border: 1px solid #ba8989;
     border-radius: 3px;
+    font-size: 18px;
+    width: 300px;
   }
   
   .login .submit-button,
@@ -56,4 +58,26 @@
     color: #007bff;
     text-decoration: none;
   }
+  .login input[type="submit"] {
+    font-size: 20px;
+    background-color: green;
+    color: white;
+    width: 200px;
+    padding: 10px;
+  }
+  
+  .login button.signup-button {
+    background-color: green;
+    color: white;
+    width: 200px;
+    padding: 10px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   

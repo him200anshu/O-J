@@ -4,13 +4,15 @@ const { userdata } = require("./mongo");
 const cors = require("cors");
 const { generateFile, createInput } = require("./generateFile");
 const { executeCpp } = require("./executeCpp");
-const { Ojproblem } = require("./mongo");
+const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors()); // Enable CORS for all routes
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("Welcome to the homepage");
@@ -49,12 +51,16 @@ app.post("/", async (req, res) => {
         res.json({ status: "incorrect_password" });
       }
     } else {
-      res.json({ status: "user_not_found" });
+      res.json({ status: "notexist" });
     }
   } catch (error) {
     console.log(error);
     res.json({ status: "fail", message: "An error occurred while processing your request." });
   }
+});
+
+app.get("/otp-store", (req, res) => {
+  res.json(otpStore);
 });
 
 app.post("/signup", async (req, res) => {
@@ -80,28 +86,93 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-
-
-app.get('/api/ojproblem/:problemId', async (req, res) => {
-  const { problemId } = req.params;
-
-  console.log('Received problem ID:', problemId);
+// Store generated OTPs in memory (for demonstration purposes only, not suitable for production)
+const otpStore = {};
+app.post("/check-email", async (req, res) => {
+  const { email } = req.body;
 
   try {
-    const problem = await Ojproblem.findOne({ problemId: parseInt(problemId) });
+    const user = await userdata.findOne({ email });
 
-    console.log('Problem:', problem);
-
-    if (problem) {
-      res.json(problem);
+    if (user) {
+      // Email exists in the database
+      res.json({ exists: true });
     } else {
-      res.status(404).json({ error: 'Problem not found' });
+      // Email does not exist in the database
+      res.json({ exists: false });
     }
   } catch (error) {
-    console.error('Error while fetching problem:', error.message);
-    res.status(500).json({ error: 'An error occurred while fetching the problem' });
+    console.log(error);
+    res.status(500).json({ success: false, message: "An error occurred while checking the email." });
   }
 });
+
+
+// Endpoint for sending OTP
+app.post("/send-otp", (req, res) => {
+  const { email } = req.body;
+
+  // Generate OTP (you can use any method to generate OTP)
+  const otp = Math.floor(100000 + Math.random() * 900000);
+
+  // Store OTP in memory (replace with database or cache storage in production)
+  otpStore[email] = otp;
+
+  console.log("Generated OTP:", otp);
+
+  // Send OTP via email
+  sendEmail(email, "OTP Verification", `Your OTP is: ${otp}`)
+    .then(() => {
+      res.status(200).json({ success: true });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Failed to send OTP" });
+    });
+});
+
+// Endpoint for verifying OTP
+app.post("/verify-otp", (req, res) => {
+  const { email, otp } = req.body;
+
+  // Get stored OTP from memory (replace with database or cache retrieval in production)
+  const storedOtp = otpStore[email];
+  console.log("Entered OTP:", otp);
+  console.log("Stored OTP:", storedOtp);
+  if (storedOtp && storedOtp.toString().trim() === otp.toString().trim()) {
+    // Valid OTP
+    // Clear stored OTP (replace with deletion from database or cache in production)
+    delete otpStore[email];
+
+    res.status(200).json({ success: true });
+  } else {
+    // Invalid OTP
+    res.status(400).json({ success: false, message: "Invalid OTP" });
+  }
+});
+
+// Function to send email
+async function sendEmail(to, subject, text) {
+  // Configure nodemailer with your Gmail account details
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "him2004anshu@gmail.com",
+      pass: "daugwcxeicbnljwf",
+    },
+  });
+
+  // Prepare email options
+  const mailOptions = {
+    from: "sender@example.com",
+    to,
+    subject,
+    text,
+  };
+
+  // Send email
+  await transporter.sendMail(mailOptions);
+}
 
 const port = 8001;
 app.listen(port, () => {
