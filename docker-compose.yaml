@@ -4,8 +4,15 @@ services:
     build: ./frontend
     ports:
       - 3000:3000
+    networks:
+      - my-network
 
   backend:
     build: ./backend
     ports:
       - 8001:8001
+    networks:
+      - my-network
+
+networks:
+  my-network:

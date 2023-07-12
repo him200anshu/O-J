@@ -14,11 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Welcome to the homepage");
 });
 
-app.post("/run", async (req, res) => {
+app.post("/api/run", async (req, res) => {
   const { language = "cpp", code, input } = req.body;
 
   if (!code) {
@@ -38,7 +38,7 @@ app.post("/run", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -59,11 +59,11 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.get("/otp-store", (req, res) => {
+app.get("/api/otp-store", (req, res) => {
   res.json(otpStore);
 });
 
-app.post("/signup", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
   const { email, password } = req.body;
 
   const data = {
@@ -88,7 +88,7 @@ app.post("/signup", async (req, res) => {
 
 // Store generated OTPs in memory (for demonstration purposes only, not suitable for production)
 const otpStore = {};
-app.post("/check-email", async (req, res) => {
+app.post("/api/check-email", async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -109,7 +109,7 @@ app.post("/check-email", async (req, res) => {
 
 
 // Endpoint for sending OTP
-app.post("/send-otp", (req, res) => {
+app.post("/api/send-otp", (req, res) => {
   const { email } = req.body;
 
   // Generate OTP (you can use any method to generate OTP)
