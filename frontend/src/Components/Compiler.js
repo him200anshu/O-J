@@ -194,9 +194,10 @@ function Compiler() {
                     </li>
                   ))}
                 </ul>
+                
               </div>
             )}
-
+              
             {verdict && (
               <div className="verdict">
                 <h4 className={verdict.toLowerCase()}>{verdict}</h4>

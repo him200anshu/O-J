@@ -17,7 +17,7 @@ RUN apk add --no-cache build-base
 COPY . .
 
 # Expose the port on which the backend will run (modify if needed)
-EXPOSE 8001
+EXPOSE 8002
 
 # Command to start the backend server
 CMD ["node", "app.js"]

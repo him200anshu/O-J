@@ -13,7 +13,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8001/signup", {
+      const response = await axios.post("http://localhost:8002/signup", {
         email,
         password,
       });

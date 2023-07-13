@@ -174,7 +174,7 @@ async function sendEmail(to, subject, text) {
   await transporter.sendMail(mailOptions);
 }
 
-const port = 8001;
+const port = 8002;
 app.listen(port, () => {
   console.log(`Server connected on port ${port}`);
 });

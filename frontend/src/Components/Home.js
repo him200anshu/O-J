@@ -6,6 +6,7 @@ import "./Home.css";
 function Home() {
   const [toggleState, setToggleState] = useState(1);
   const [codeProblems, setCodeProblems] = useState([]);
+  
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -122,7 +123,7 @@ function Home() {
                 Output: 754
               </p>
               <hr />
-              <button className="code-button" onClick={() => handleCodeClick(2,[123],[321],[457],[754],[357823],[328753],[-245],[-542],[190],[91])}>
+              <button className="code-button" onClick={() => handleCodeClick(2,[123],[321],[457],[754],[357823],[328753],[-245],[-542],[91],[190])}>
                 Code
               </button>
             </div>
