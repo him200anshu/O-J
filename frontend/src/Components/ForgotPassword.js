@@ -13,7 +13,7 @@ function ForgotPassword() {
 
   async function sendOtp() {
     try {
-      const response = await axios.post("http://localhost:8002/check-email", {
+      const response = await axios.post("https://o-j-api.vercel.app/check-email", {
         email,
       });
   
@@ -22,7 +22,7 @@ function ForgotPassword() {
       if (exists) {
         // Email exists in the database, proceed to send OTP
         try {
-          const otpResponse = await axios.post("http://localhost:8002/send-otp", {
+          const otpResponse = await axios.post("https://o-j-api.vercel.app/send-otp", {
             email,
           });
   
@@ -46,7 +46,7 @@ function ForgotPassword() {
   
   async function verifyOtp() {
     try {
-      const response = await axios.post("http://localhost:8002/verify-otp", {
+      const response = await axios.post("https://o-j-api.vercel.app/verify-otp", {
         email,
         otp,
       });
