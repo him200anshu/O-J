@@ -11,7 +11,11 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors()); // Enable CORS for all routes
+app.use(cors(
+  origin:["https://deploy-mern-lwhq.vercel.app"],
+  methods:["POST","GET"],
+  credentials:true
+)); // Enable CORS for all routes
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
