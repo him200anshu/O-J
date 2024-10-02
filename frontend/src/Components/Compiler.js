@@ -48,7 +48,7 @@ function Compiler() {
     setTestResults([]);
 
     try {
-      const response = await axios.post('http://localhost:8002/run', {
+      const response = await axios.post('https://o-j-api.vercel.app/run', {
         language: 'cpp',
         code,
         input: inputs1.join('\n'),
@@ -92,7 +92,7 @@ function Compiler() {
         const input = allInputs[i].join('\n');
         const expected = allNumbers[i].join(' ');
 
-        const response = await axios.post('http://localhost:8002/run', {
+        const response = await axios.post('https://o-j-api.vercel.app/run', {
           language: 'cpp',
           code,
           input,
