@@ -13,7 +13,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8002/signup", {
+      const response = await axios.post("https://o-j-api.vercel.app/signup", {
         email,
         password,
       });
